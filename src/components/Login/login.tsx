@@ -14,10 +14,12 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [isFormValid, setIsFormValid] = useState(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
 
   const handleFormChange = () => {
     const values = form.getFieldsValue();
     setIsFormValid(!!values.username && !!values.password);
+    setLoginError(null);
   };
 
   const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
@@ -26,18 +28,16 @@ const Login: React.FC = () => {
     if (username === "ranjula2000" && password === "Ranjula123#") {
       navigate("/landing");
       console.log("Success:", values);
-    } else if (username === "admin@octoshop.com" && password === "octoshop123#") {
+    } else if (username === "admin@octoshop.com" && password === "Octoshop123#") {
       navigate("/admin");
       console.log("Success:", values);
     } else {
-      alert("User not found! Please check the credentials.");
+      setLoginError("Invalid credentials.");
       console.log("error", values);
     }
   };
 
-  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (
-    errorInfo
-  ) => {
+  const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
@@ -63,6 +63,7 @@ const Login: React.FC = () => {
           onValuesChange={handleFormChange}
           autoComplete="off"
           className="bg-white bg-opacity-30 backdrop-blur-lg shadow-lg rounded-lg p-8 w-96"
+          form={form}
         >
           <div className="m-5">
             <Form.Item<FieldType>
@@ -71,6 +72,8 @@ const Login: React.FC = () => {
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
+              validateStatus={loginError ? "error" : ""}
+              help={loginError}
             >
               <Input />
             </Form.Item>
@@ -81,6 +84,8 @@ const Login: React.FC = () => {
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
+              validateStatus={loginError ? "error" : ""}
+              help={loginError}
             >
               <Input.Password />
             </Form.Item>
@@ -94,7 +99,12 @@ const Login: React.FC = () => {
             </Form.Item>
 
             <Form.Item label={null}>
-              <Button type="primary" htmlType="submit" className="w-full" disabled={!!isFormValid}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="w-full"
+                disabled={!isFormValid}
+              >
                 Submit
               </Button>
             </Form.Item>
@@ -104,6 +114,5 @@ const Login: React.FC = () => {
     </div>
   );
 };
-
 
 export default Login;

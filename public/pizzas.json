@@ -1,0 +1,19 @@
+[
+    {
+      "id": 1,
+      "name": "Pepperoni Pizza",
+      "image": "/assets/Items/Pepperoni.jpg",
+      "avatar": "/assets/Items/chef.jpg",
+      "description": "5% Disscount on Pepperoni Pizza Today",
+      "price": 1290
+    },
+    {
+      "id": 2,
+      "name": "Cheesy Onion Pizza",
+      "image": "/assets/Items/Cheesy.jpg",
+      "avatar": "/assets/Items/chef.jpg",
+      "description": "2% Disscount on Cheesy Onion Pizza Today",
+      "price": 1150
+    }
+  ]
+  

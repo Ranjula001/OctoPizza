@@ -1,25 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ShopOutlined,
   TeamOutlined,
   AppstoreOutlined,
   LogoutOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme, Button } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
-
-const siderStyle: React.CSSProperties = {
-  overflow: "auto",
-  height: "100vh",
-  position: "sticky",
-  insetInlineStart: 0,
-  top: 0,
-  bottom: 0,
-  scrollbarWidth: "thin",
-  scrollbarGutter: "stable",
-};
 
 const menuItems: MenuProps["items"] = [
   { key: "1", icon: <ShopOutlined />, label: "Items" },
@@ -29,11 +21,21 @@ const menuItems: MenuProps["items"] = [
 ];
 
 const Admin: React.FC = () => {
+  const navigate = useNavigate();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
   const [selectedKey, setSelectedKey] = useState("1");
+  const [collapsed, setCollapsed] = useState(false);
+
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    if (e.key === "4") {
+      navigate("/");
+    } else {
+      setSelectedKey(e.key);
+    }
+  };
 
   const renderContent = () => {
     switch (selectedKey) {
@@ -43,28 +45,56 @@ const Admin: React.FC = () => {
         return <p>👥 User List: Manage users and their information.</p>;
       case "3":
         return <p>🛒 Order List: Track and manage orders.</p>;
-      case "4":
-        return <Button danger>Log out</Button>;
       default:
-        return <p>Select a Tab from the sidebar.</p>;
+        return <p>Select a tab from the sidebar.</p>;
     }
   };
 
   return (
     <Layout hasSider>
-      <Sider style={siderStyle}>
-        <div className="demo-logo-vertical" />
+      <Sider
+        collapsible
+        collapsed={collapsed}
+        onCollapse={(value) => setCollapsed(value)}
+        breakpoint="md"
+        style={{
+          height: "100vh",
+          position: "sticky",
+          insetInlineStart: 0,
+          top: 0,
+          bottom: 0,
+          scrollbarWidth: "thin",
+          scrollbarGutter: "stable",
+        }}
+      >
+        <div className="flex items-center justify-center py-4 text-white font-bold">
+          {collapsed ? "🔹" : "OctoPizza's By Octopus BI"}
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           selectedKeys={[selectedKey]}
           items={menuItems}
-          onClick={(e) => setSelectedKey(e.key)}
+          onClick={handleMenuClick}
         />
       </Sider>
       <Layout>
-        <Header style={{ padding: 0, background: colorBgContainer }} />
+        <Header
+          style={{
+            padding: "0 16px",
+            background: colorBgContainer,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
+          />
+        </Header>
         <Content style={{ margin: "24px 16px 0", overflow: "initial" }}>
           <div
             style={{
