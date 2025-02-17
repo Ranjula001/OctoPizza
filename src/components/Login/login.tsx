@@ -102,10 +102,9 @@ const Login: React.FC = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full"
                 disabled={!isFormValid}
               >
-                Submit
+                Log in
               </Button>
             </Form.Item>
           </div>

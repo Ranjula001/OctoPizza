@@ -14,7 +14,7 @@ import { Layout, Menu, theme, Button } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 
 const menuItems: MenuProps["items"] = [
-  { key: "1", icon: <ShopOutlined />, label: "Items" },
+  { key: "1", icon: <ShopOutlined />, label: "Inventory" },
   { key: "2", icon: <TeamOutlined />, label: "Users" },
   { key: "3", icon: <AppstoreOutlined />, label: "Orders" },
   { key: "4", icon: <LogoutOutlined />, label: "Log out" },
@@ -40,7 +40,7 @@ const Admin: React.FC = () => {
   const renderContent = () => {
     switch (selectedKey) {
       case "1":
-        return <p>📦 Item List: Manage all items.</p>;
+        return <p>📦 Item List: Manage all Inventory items.</p>;
       case "2":
         return <p>👥 User List: Manage users and their information.</p>;
       case "3":
